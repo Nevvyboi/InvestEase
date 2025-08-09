@@ -26,39 +26,55 @@ A sleek, responsive web app that connects to the **Investec Sandbox API** 🏦, 
 
 ---
 
-## 📦 Installation & Setup
+## 🧰 Installation & Setup (no API credentials needed)
 
-1. **Clone the repository**
+> This project ships with a preconfigured Investec **Sandbox** client.
+> You can run it locally without setting any keys or secrets.
 
-   ```bash
-   git clone https://github.com/yourusername/InvestEase.git
-   cd InvestEase
-   ```
+### 1) Clone the repo
 
-2. **Install dependencies** (requires Python 3)
+```bash
+git clone https://github.com/yourusername/InvestEase.git
+cd InvestEase
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2) (Optional) Create & activate a virtual environment
 
-3. **Set your environment variables** (API keys, secrets)
+```bash
+# Windows (PowerShell)
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 
-   ```bash
-   export INVESTEC_CLIENT_ID=your_client_id
-   export INVESTEC_SECRET=your_secret
-   ```
+# macOS/Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-4. **Run the Flask server**
+### 3) Install dependencies
 
-   ```bash
-   flask run
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-5. **Open in browser**
+### 4) Run the app
 
-   ```
-   http://127.0.0.1:5000
-   ```
+Use whichever command your setup prefers:
+
+```bash
+# Option A: Flask CLI
+flask --app app run --debug
+
+# Option B: Python entrypoint
+python app.py
+# or
+python -m flask --app app run --debug
+```
+
+### 5) Open in your browser
+
+```
+http://127.0.0.1:5000/
+```
 
 ---
 
