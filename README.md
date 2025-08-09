@@ -2,19 +2,18 @@
 
 A sleek, responsive web app that connects to the **Investec Sandbox API** 🏦, letting you:
 📊 **View recent transactions** in style
-💰 **Pay multiple beneficiaries** in one go
 🎨 **Enjoy a clean, animated, responsive UI**
 ⚡ **Navigate quickly** with an intuitive sidebar
 
 ---
 
-## 🚀 Features
+## 🚀 Features (Sandbox-limited)
 
-* **Account Overview** — Switch between sandbox accounts with ease
-* **Recent Transactions** — Scrollable, well-formatted list of your latest account activity
-* **Multi-Beneficiary Payments** — Add up to 50 payments in one batch
-* **Responsive Design** — Works beautifully on desktop 💻 and mobile 📱
-* **Smooth Animations** — Modern gradients, hover effects, and transitions
+* **Dashboard** — High-level view of accounts and activity
+* **Accounts** — See sandbox account balances and details
+* **Transactions** — Scrollable, formatted transaction list
+* **Beneficiaries** — Manage and view sandbox beneficiary data
+* **Documents** — Retrieve account-related sandbox documents
 
 ---
 
@@ -79,16 +78,16 @@ A sleek, responsive web app that connects to the **Investec Sandbox API** 🏦, 
 
 ---
 
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, open an issue first to discuss what you’d like to change.
-
----
-
 ## 📜 License
 
 MIT License — feel free to fork, modify, and share.
 
 ---
 
-Do you want me to also **add badges** (Python version, Flask, License, etc.) so your GitHub README looks even more polished? That would make it pop visually.
+## 📜 Notes
+
+⚠ **Important:** The Investec Sandbox API is **read-only** for most operations and contains only sample data. Some features (like real payments) are not functional in sandbox mode.
+
+---
+
+
