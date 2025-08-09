@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>InvestEase Banking</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="bgElements">
+        <div class="gradientOrb orb1"></div>
+        <div class="gradientOrb orb2"></div>
+        <div class="gradientOrb orb3"></div>
+        <div class="gradientOrb orb4"></div>
+        <div class="gradientOrb orb5"></div>
+        <div class="gradientOrb orb6"></div>
+        <div class="gradientOrb orb7"></div>
+        <div class="gradientOrb orb8"></div>
+        <div class="gradientOrb orb9"></div>
+        <div class="gradientOrb orb10"></div>
+    </div>
+
+    <div class="appContainer">
+        <aside class="sidebar">
+            <div class="logoSection">
+                <div class="logo">IE</div>
+                <div class="logoText">InvestEase</div>
+            </div>
+
+            <nav class="navSection">
+                <div class="navItem active" data-nav="dashboard">
+                    <i class="navIcon fas fa-home"></i>
+                    <span class="navText">Dashboard</span>
+                </div>
+                <div class="navItem" data-nav="accounts">
+                    <i class="navIcon fas fa-wallet"></i>
+                    <span class="navText">Accounts</span>
+                </div>
+                <div class="navItem" data-nav="transactions">
+                    <i class="navIcon fas fa-exchange-alt"></i>
+                    <span class="navText">Transactions</span>
+                </div>
+                <div class="navItem" data-nav="beneficiaries">
+                    <i class="navIcon fas fa-users"></i>
+                    <span class="navText">Beneficiaries</span>
+                </div>
+                <div class="navItem" data-nav="documents">
+                    <i class="navIcon fas fa-file-invoice"></i>
+                    <span class="navText">Documents</span>
+                </div>
+            </nav>
+
+            <div class="colorPickerSection">
+                <div class="sectionLabel">Color Scheme</div>
+                <div class="colorOptions">
+                    <button class="colorOption active" dataColor = "indigo" style  = "background: linear-gradient(135deg, #6366f1, #4f46e5)"></button>
+                    <button class="colorOption" dataColor = "emerald" style = "background: linear-gradient(135deg, #10b981, #059669)"></button>
+                    <button class="colorOption" dataColor = "rose" style = "background: linear-gradient(135deg, #f43f5e, #e11d48)"></button>
+                    <button class="colorOption" dataColor = "amber" style = "background: linear-gradient(135deg, #f59e0b, #d97706)"></button>
+                    <button class="colorOption" dataColor = "purple" style = "background: linear-gradient(135deg, #a855f7, #9333ea)"></button>
+                    <button class="colorOption" dataColor = "teal" style = "background: linear-gradient(135deg, #14b8a6, #0f766e)"></button>
+                </div>
+            </div>
+
+            <button class="themeToggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+        </aside>
+
+        <main class="mainContent">
+            <section id="dashboardView">
+                <div id="connectionMessage" class="connectionMessage" style="display: none;">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="messageText"></span>
+                </div>
+
+                <header class="header">
+                    <div class="headerLeft">
+                        <h1>Welcome to InvestEase</h1>
+                        <p>
+                            Here's your Sandbox Overview using 
+                            <a class="apiLink" href="https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information" target="_blank" rel="noopener noreferrer">
+                                Investec's Private Banking API
+                            </a>
+                        </p>
+                    </div>
+                    <div class="headerRight">
+                        <div class="sandboxStatus">
+                            <div class="statusIndicator" id="statusIndicator"></div>
+                            <span id="statusText">Connecting to Sandbox...</span>
+                        </div>
+                        <div class="tokenTimer" id="tokenTimer">Connecting...</div>
+                    </div>
+                </header>
+
+                <div class="balanceGrid">
+                    <div class="balanceCard balanceMain">
+                        <div class="balanceTitle">Total Balance</div>
+                        <div class="balanceAmount" id="totalBalance">Loading...</div>
+                        <div class="balanceDetails">
+                            <div class="balanceDetail">
+                                <div class="balanceDetailLabel">Savings</div>
+                                <div class="balanceDetailValue" id="savingsBalance">Loading...</div>
+                            </div>
+                            <div class="balanceDetail">
+                                <div class="balanceDetailLabel">Cheque</div>
+                                <div class="balanceDetailValue" id="chequeBalance">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="balanceCard quickStats">
+                        <div class="statItem">
+                            <div class="statIcon"><i class="fas fa-arrow-up"></i></div>
+                            <div class="statInfo">
+                                <h4 id="statAccountsCount">–</h4>
+                                <p>Accounts linked</p>
+                            </div>
+                        </div>
+                        <div class="statItem">
+                            <div class="statIcon"><i class="fas fa-chart-pie"></i></div>
+                            <div class="statInfo">
+                                <h4 id="statSavingsShare">–</h4>
+                                <p>Savings of total</p>
+                            </div>
+                        </div>
+                        <div class="statItem">
+                            <div class="statIcon"><i class="fas fa-wallet"></i></div>
+                            <div class="statInfo">
+                                <h4 id="statLargestValue">–</h4>
+                                <p id="statLargestName">Largest account</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="accountsSection">
+                    <div class="sectionHeader">
+                        <h2 class="sectionTitle">Your Accounts</h2>
+                        <a href="#" class="viewAll">View All</a>
+                    </div>
+                    <div class="accountsGrid" id="dashAccountsGrid">
+                        <div class="accountCard">
+                            <div class="accountHeader">
+                                <div class="accountInfo">
+                                    <h3>Loading...</h3>
+                                    <p>-</p>
+                                </div>
+                                <div class="accountIcon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                            </div>
+                            <div class="accountBalance">
+                                <div class="accountAmount">-</div>
+                                <div class="accountChange changePositive">
+                                        -
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accountCard">
+                            <div class="accountHeader">
+                                <div class="accountInfo">
+                                    <h3>Loading...</h3>
+                                    <p>-</p>
+                                </div>
+                                <div class="accountIcon">
+                                    <i class="fas fa-piggy-bank"></i>
+                                </div>
+                            </div>
+                            <div class="accountBalance">
+                                <div class="accountAmount">-</div>
+                                <div class="accountChange changePositive">
+                                        -
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accountCard">
+                            <div class="accountHeader">
+                                <div class="accountInfo">
+                                    <h3>Loading...</h3>
+                                    <p>-</p>
+                                </div>
+                                <div class="accountIcon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                            <div class="accountBalance">
+                                <div class="accountAmount">-</div>
+                                    <div class="accountChange changePositive">
+                                            -
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+            </section>
+
+            <section id="accountsView" style="display:none;">
+                <div class="sectionHeader">
+                    <h2 class="sectionTitle">All Accounts</h2>
+                    <a id="backToDashboard" href="#" class="viewAll">Back</a>
+                </div>
+                <div class="accountsGrid" id="allAccountsGrid"></div>
+            </section>
+
+        
+            <section id="beneficiariesView" style="display:none;">
+                <div class="sectionHeader">
+                    <h2 class="sectionTitle">Beneficiaries</h2>
+                    <a href="#" class="viewAll" id="backToDashboardFromBenefs">Back</a>
+                </div>
+
+                <div class="benefControls">
+                    <input id="benefSearch" type="search" placeholder="Search name or bank" />
+                    <select id="benefCategoryFilter"></select>
+                </div>
+
+                <div id="benefCategories" class="benefCategories"></div>
+                <div id="benefGrid" class="benefGrid"></div>
+            </section>
+
+            <section id="documentsView" style="display:none;">
+                <div class="sectionHeader">
+                    <h2 class="sectionTitle">Documents</h2>
+                    <a href="#" class="viewAll" id="backToDashboardFromDocs">Back</a>
+                </div>
+
+                <div class="card">
+                    <div class="sectionSubHeader">
+                        <h3>Fetch Account Documents</h3>
+                        <div class="inlineControls">
+                            <label for="docAccountSelect">Account</label>
+                            <div id="docAccountSelect" class="roundSelect"></div>
+                            <label for="docFromDate">From</label>
+                            <input id="docFromDate" type="date" />
+                            <label for="docToDate">To</label>
+                            <input id="docToDate" type="date" />
+                            <button id="docFetchBtn" class="primaryBtn">Fetch</button>
+                        </div>
+                    </div>
+
+                    <div class="docsListHeader">
+                        <div>Type</div>
+                        <div>Date</div>
+                        <div>Description</div>
+                        <div class="right">Action</div>
+                    </div>
+                    <div id="docsList" class="docsList">
+                        <div class="docEmpty">Pick an account and date range, then click Fetch.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="transactionsView" style="display:none;">
+                <div class="sectionHeader">
+                    <h2 class="sectionTitle">Transactions</h2>
+                    <a id="backToDashboardFromTransactions" href="#" class="viewAll">Back</a>
+                </div>
+
+                <div class="card">
+                    <div class="sectionSubHeader">
+                        <h3>Recent Transactions</h3>
+                        <div class="inlineControls">
+                            <label for="txAccountSelect">Account</label>
+                            <div id="txAccountSelect" class="roundSelect"></div>
+                        </div>
+                    </div>
+                    <div id="txList" class="txList"></div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
