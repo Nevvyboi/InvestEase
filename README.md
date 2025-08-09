@@ -1,7 +1,3 @@
-Here’s a clean **copy-paste-ready** README for your GitHub repo:
-
----
-
 # 💳 InvestEase — Modern Banking Dashboard
 
 A sleek, responsive web app that connects to the **Investec Sandbox API** 🏦, letting you:
