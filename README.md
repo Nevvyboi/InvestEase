@@ -32,9 +32,7 @@ A sleek, responsive web app that connects to the **[Investec Sandbox API](https:
 
 ### 0️⃣ Make sure Python is installed 🐍
 You’ll need **Python 3.8+** installed on your system.  
-Check by running:
-
-python --version or python3 --version
+Check by running -> python --version or python3 --version
 
 ### 1) Clone the repo
 
