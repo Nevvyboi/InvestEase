@@ -57,6 +57,7 @@ source .venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
+cd Src
 ```
 
 ### 4) Run the app
