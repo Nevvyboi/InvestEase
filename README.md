@@ -9,11 +9,11 @@ A sleek, responsive web app that connects to the **[Investec Sandbox API](https:
 
 ## 🚀 Features (Sandbox limited)
 
-* **Dashboard** -> High-level view of accounts and activity
+* **Dashboard** -> High level view of accounts and activity
 * **Accounts** -> See sandbox account balances and details
 * **Transactions** -> Scrollable, formatted transaction list
 * **Beneficiaries** -> Manage and view sandbox beneficiary data
-* **Documents** -> Retrieve account-related sandbox documents
+* **Documents** -> Retrieve account related sandbox documents
 
 ---
 
