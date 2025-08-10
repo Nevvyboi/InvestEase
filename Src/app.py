@@ -4,37 +4,39 @@ import json, requests
 
 app = Flask(__name__)
 
-CLIENT_ID = "yAxzQRFX97vOcyQAwluEU6H6ePxMA5eY"
-CLIENT_SECRET = "4dY0PjEYqoBrZ99r"
-API_KEY = "eUF4elFSRlg5N3ZPY3lRQXdsdUVVNkg2ZVB4TUE1ZVk6YVc1MlpYTjBaV04wWlcxRmRHaGpHUkJ0WVdOamIzVnVaSE50WTJGdVkwdDJlQT09"
+clientId = "yAxzQRFX97vOcyQAwluEU6H6ePxMA5eY"
+clientSecret = "4dY0PjEYqoBrZ99r"
+apiKey = "eUF4elFSRlg5N3ZPY3lRQXdsdUVVNkg2ZVB4TUE1ZVk6YVc1MlpYTjBaV04wWlcxRmRHaGpHUkJ0WVdOamIzVnVaSE50WTJGdVkwdDJlQT09"
 
-AUTH_URL = "https://openapisandbox.investec.com/identity/v2/oauth2/token"
-BASE_URL = "https://openapisandbox.investec.com"
+authUrl = "https://openapisandbox.investec.com/identity/v2/oauth2/token"
+baseUrl = "https://openapisandbox.investec.com"
 
-def get_access_token():
-    auth_string = f"{CLIENT_ID}:{CLIENT_SECRET}"
-    auth_bytes = auth_string.encode("ascii")
-    base64_auth = base64.b64encode(auth_bytes).decode("ascii")
+def getAccessToken():
+    authString = f"{clientId}:{clientSecret}"
+    authBytes = authString.encode("ascii")
+    base64Auth = base64.b64encode(authBytes).decode("ascii")
 
     headers = {
-        "Authorization": f"Basic {base64_auth}",
-        "x-api-key": API_KEY,
+        "Authorization": f"Basic {base64Auth}",
+        "x-api-key": ,
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "application/json"
     }
 
-    data = {"grant_type": "client_credentials"}
+    data = {
+        "grant_type": "client_credentials"
+    }
 
-    response = requests.post(AUTH_URL, headers=headers, data=data)
+    response = requests.post(authUrl, headers=headers, data=data)
     response.raise_for_status()
-    token_data = response.json()
-    return token_data["access_token"]
+    tokenData = response.json()
+    return tokenData["access_token"]
 
-def call_sandbox_api(endpoint, token):
-    url = f"{BASE_URL}{endpoint}"
+def callSandboxApi(endpoint, token):
+    url = f"{baseUrl}{endpoint}"
     headers = {
         "Authorization": f"Bearer {token}",
-        "x-api-key": API_KEY,
+        "x-api-key": apiKey,
         "Accept": "application/json"
     }
 
@@ -47,109 +49,103 @@ def index():
     return render_template("index.html")
 
 @app.route("/api/accounts")
-def get_accounts():
+def getAccounts():
     try:
-        token = get_access_token()
-        accounts = call_sandbox_api("/za/pb/v1/accounts", token)
+        token = getAccessToken()
+        accounts = callSandboxApi("/za/pb/v1/accounts", token)
         return jsonify(accounts)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/api/balance/<account_id>")
-def get_balance(account_id):
+def getBalance(accountId):
     try:
-        token = get_access_token()
-        balance = call_sandbox_api(f"/za/pb/v1/accounts/{account_id}/balance", token)
+        token = getAccessToken()
+        balance = callSandboxApi(f"/za/pb/v1/accounts/{accountId}/balance", token)
         return jsonify(balance)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/api/beneficiaries")
-def get_beneficiaries():
+def getBeneficiaries():
     try:
-        token = get_access_token()
-        beneficiaries = call_sandbox_api("/za/pb/v1/accounts/beneficiaries", token)
+        token = getAccessToken()
+        beneficiaries = callSandboxApi("/za/pb/v1/accounts/beneficiaries", token)
         return jsonify(beneficiaries)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/api/beneficiary-categories")
-def get_beneficiary_categories():
+def getBeneficiaryCategories():
     try:
-        token = get_access_token()
-        categories = call_sandbox_api("/za/pb/v1/accounts/beneficiarycategories", token)
-        print(categories)
+        token = getAccessToken()
+        categories = callSandboxApi("/za/pb/v1/accounts/beneficiarycategories", token)
         return jsonify(categories)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route("/api/documents", methods=["GET"])
-def get_documents():
-    account_id = request.args.get("accountId")
-    from_date = request.args.get("fromDate")
+def getDocuments():
+    accountId = request.args.get("accountId")
+    fromDate = request.args.get("fromDate")
     to_date   = request.args.get("toDate")
-    if not account_id or not from_date or not to_date:
+    if not accountId or not fromDate or not to_date:
         return jsonify({"error": "accountId, fromDate, toDate are required"}), 400
 
-    token = get_access_token()
-    url = f"{BASE_URL}/za/pb/v1/accounts/{account_id}/documents?fromDate={from_date}&toDate={to_date}"
-    headers = {"Authorization": f"Bearer {token}", "x-api-key": API_KEY, "Accept": "application/json"}
-    resp = requests.get(url, headers=headers, timeout=30)
+    token = getAccessToken()
+    url = f"{baseUrl}/za/pb/v1/accounts/{accountId}/documents?fromDate={fromDate}&toDate={to_date}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "x-api-key": apiKey,
+        "Accept": "application/json"
+    }
+    resp = requests.get(url, headers = headers, timeout = 30)
     return (jsonify(resp.json()), resp.status_code)
 
 @app.route("/api/health")
-def api_health():
+def apiHealth():
     return jsonify({"ok": True}), 200
 
 @app.route("/api/routes")
-def api_routes():
+def apiRoutes():
     routes = []
     for rule in app.url_map.iter_rules():
         routes.append({"rule": str(rule), "methods": sorted(m for m in rule.methods if m not in ("HEAD","OPTIONS"))})
     return jsonify(sorted(routes, key=lambda r: r["rule"]))
 
 @app.route("/api/accounts/<account_id>/transactions", methods=["GET"])
-def get_transactions(account_id):
-    """
-    Fetch transactions for a given account.
-    """
+def getTransactions(accountId):
     try:
-        token = get_access_token()
+        token = getAccessToken()
         headers = {
             "Authorization": f"Bearer {token}",
-            "x-api-key": API_KEY,
+            "x-api-key": apiKey,
             "Accept": "application/json"
         }
-        url = f"{BASE_URL}/za/pb/v1/accounts/{account_id}/transactions"
-        # --- NEW: build params / support "all=true" and paginate ---
+        url = f"{baseUrl}/za/pb/v1/accounts/{accountId}/transactions"
         from datetime import date
-
-        all_flag = str(request.args.get("all", "")).lower() in ("1", "true", "yes")
-
-        # If "all=true", fetch a very broad range that covers sandbox data (and prod history)
-        if all_flag:
-            base_params = {
+        allFlag = str(request.args.get("all", "")).lower() in ("1", "true", "yes")
+        if allFlag:
+            baseParams = {
                 "fromDate": "1900-01-01",
                 "toDate": date.today().isoformat(),
             }
         else:
-            # otherwise respect whatever the UI passed (or nothing = API's default window)
-            base_params = {}
+            baseParams = {}
             fd = request.args.get("fromDate")
             td = request.args.get("toDate")
-            tx_type = request.args.get("transactionType")
-            include_p = request.args.get("includePending")
-            if fd: base_params["fromDate"] = fd
-            if td: base_params["toDate"] = td
-            if tx_type: base_params["transactionType"] = tx_type
-            if include_p: base_params["includePending"] = include_p
+            txType = request.args.get("transactionType")
+            includeP = request.args.get("includePending")
+            if fd: baseParams["fromDate"] = fd
+            if td: baseParams["toDate"] = td
+            if txType: baseParams["transactionType"] = txType
+            if includeP: baseParams["includePending"] = includeP
 
-        # Pull all pages
         page = 1
-        all_tx = []
-        last_meta = {}
+        allTx = []
+        lastMeta = {}
         while True:
-            params = {**base_params, "page": page}
+            params = {**baseParams, "page": page}
             resp = requests.get(url, headers=headers, params=params, timeout=30)
             try:
                 payload = resp.json()
@@ -158,20 +154,19 @@ def get_transactions(account_id):
 
             tx = (payload.get("data", {}) or {}).get("transactions", []) or payload.get("transactions", [])
             meta = payload.get("meta", {})
-            total_pages = int(meta.get("totalPages", 1) or 1)
+            totalPages = int(meta.get("totalPages", 1) or 1)
 
-            all_tx.extend(tx)
-            last_meta = meta
+            allTx.extend(tx)
+            lastMeta = meta
 
-            if page >= total_pages:
+            if page >= totalPages:
                 break
             page += 1
 
-        return jsonify({"data": {"transactions": all_tx}, "meta": last_meta}), 200
+        return jsonify({"data": {"transactions": allTx}, "meta": lastMeta}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# POST /api/pay-multiple  -> Investec: POST /za/pb/v1/accounts/{accountId}/paymultiple
 @app.route("/api/pay-multiple", methods=["POST"])
 def pay_multiple():
     try:
@@ -181,14 +176,14 @@ def pay_multiple():
         if not account_id or not payment_list:
             return jsonify({"error": "accountId and paymentList are required"}), 400
 
-        token = get_access_token()
+        token = getAccessToken()
         headers = {
             "Authorization": f"Bearer {token}",
-            "x-api-key": API_KEY,
+            "x-api-key": apiKey,
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
-        url = f"{BASE_URL}/za/pb/v1/accounts/{account_id}/paymultiple"
+        url = f"{baseUrl}/za/pb/v1/accounts/{account_id}/paymultiple"
         r = requests.post(url, headers=headers, json={"paymentList": payment_list}, timeout=30)
         try:
             body = r.json()
@@ -238,17 +233,17 @@ def own_transfer():
         if not from_id or not to_id or amount is None:
             return jsonify({"error": "fromAccountId, toAccountId and amount are required"}), 400
 
-        token = get_access_token()
+        token = getAccessToken()
         headers = {
             "Authorization": f"Bearer {token}",
-            "x-api-key": API_KEY,
+            "x-api-key": apiKey,
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
 
         # Investec sandbox: POST /za/pb/v1/accounts/{accountId}/transfermultiple
         # Payload shape uses 'transferList'
-        url = f"{BASE_URL}/za/pb/v1/accounts/{from_id}/transfermultiple"
+        url = f"{baseUrl}/za/pb/v1/accounts/{from_id}/transfermultiple"
         payload = {
             "transferList": [{
                 "toAccountId": to_id,
