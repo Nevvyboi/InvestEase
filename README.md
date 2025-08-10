@@ -28,8 +28,16 @@ A sleek, responsive web app that connects to the **[Investec Sandbox API](https:
 
 ## 🧰 Installation & Setup (no API credentials needed)
 
-> This project ships with a preconfigured Investec **Sandbox** client.
+> 🚀 This project ships with a preconfigured Investec **Sandbox** client.  
 > You can run it locally without setting any keys or secrets.
+
+### 0️⃣ Make sure Python is installed 🐍
+You’ll need **Python 3.8+** installed on your system.  
+Check by running:
+
+python --version
+# or
+python3 --version
 
 ### 1) Clone the repo
 
