@@ -37,7 +37,7 @@ Check by running -> ```python --version``` or ```python3 --version```
 ### 1) Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/InvestEase.git
+git clone https://github.com/Nevvyboi/InvestEase.git
 cd InvestEase
 ```
 
