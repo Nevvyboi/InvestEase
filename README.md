@@ -34,7 +34,7 @@ A sleek, responsive web app that connects to the **[Investec Sandbox API](https:
 ### 1) Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/InvestEase.git
+git clone https://github.com/Nevvyboi/InvestEase.git
 cd InvestEase
 ```
 
