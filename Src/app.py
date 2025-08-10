@@ -57,7 +57,7 @@ def getAccounts():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route("/api/balance/<account_id>")
+@app.route("/api/balance/<accountId>")
 def getBalance(accountId):
     try:
         token = getAccessToken()
@@ -113,7 +113,7 @@ def apiRoutes():
         routes.append({"rule": str(rule), "methods": sorted(m for m in rule.methods if m not in ("HEAD","OPTIONS"))})
     return jsonify(sorted(routes, key=lambda r: r["rule"]))
 
-@app.route("/api/accounts/<account_id>/transactions", methods=["GET"])
+@app.route("/api/accounts/<accountId>/transactions", methods=["GET"])
 def getTransactions(accountId):
     try:
         token = getAccessToken()
@@ -168,5 +168,5 @@ def getTransactions(accountId):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug = True)
 
