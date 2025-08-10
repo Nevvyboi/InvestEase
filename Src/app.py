@@ -27,7 +27,7 @@ def getAccessToken():
         "grant_type": "client_credentials"
     }
 
-    response = requests.post(authUrl, headers=headers, data=data)
+    response = requests.post(authUrl, headers = headers, data = data)
     response.raise_for_status()
     tokenData = response.json()
     return tokenData["access_token"]
@@ -40,7 +40,7 @@ def callSandboxApi(endpoint, token):
         "Accept": "application/json"
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers = headers)
     response.raise_for_status()
     return response.json()
 
@@ -146,7 +146,7 @@ def getTransactions(accountId):
         lastMeta = {}
         while True:
             params = {**baseParams, "page": page}
-            resp = requests.get(url, headers=headers, params=params, timeout=30)
+            resp = requests.get(url, headers = headers, params = params, timeout = 30)
             try:
                 payload = resp.json()
             except Exception:
