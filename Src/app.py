@@ -18,7 +18,7 @@ def getAccessToken():
 
     headers = {
         "Authorization": f"Basic {base64Auth}",
-        "x-api-key": ,
+        "x-api-key": apiKey,
         "Content-Type": "application/x-www-form-urlencoded",
         "Accept": "application/json"
     }
