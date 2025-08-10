@@ -1,6 +1,6 @@
 # 💳 InvestEase — Modern Banking Dashboard
 
-A sleek, responsive web app that connects to the **[Investec Sandbox API](https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information)** 🏦, letting you:
+A sleek, responsive web app that connects to the **[Investec Sandbox API](https://developer.investec.com/za/api-products/documentation/SA_PB_Account_Information)** 🏦, letting you ->
 📊 **View recent transactions** in style
 🎨 **Enjoy a clean, animated, responsive UI**
 ⚡ **Navigate quickly** with an intuitive sidebar
@@ -9,11 +9,11 @@ A sleek, responsive web app that connects to the **[Investec Sandbox API](https:
 
 ## 🚀 Features (Sandbox-limited)
 
-* **Dashboard** — High-level view of accounts and activity
-* **Accounts** — See sandbox account balances and details
-* **Transactions** — Scrollable, formatted transaction list
-* **Beneficiaries** — Manage and view sandbox beneficiary data
-* **Documents** — Retrieve account-related sandbox documents
+* **Dashboard** -> High-level view of accounts and activity
+* **Accounts** -> See sandbox account balances and details
+* **Transactions** -> Scrollable, formatted transaction list
+* **Beneficiaries** -> Manage and view sandbox beneficiary data
+* **Documents** -> Retrieve account-related sandbox documents
 
 ---
 
